@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="基本情報技術者試験 科目A・全60問の試験演習と図解復習">
+  <title>基本情報技術者 科目A｜試験＆図解復習</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="visuals.css">
+  <link rel="stylesheet" href="flow.css">
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar">
+      <a class="brand" href="#top"><span>FE</span> Exam & Review</a>
+      <div class="progress-wrap" aria-label="進捗">
+        <span id="progressText">試験 0 / 60</span>
+        <div class="progress"><i id="progressBar"></i></div>
+      </div>
+    </nav>
+    <div class="hero-inner" id="top">
+      <p class="eyebrow">2026.06.14 修了認定試験</p>
+      <h1>採点で、<em>終わらない。</em></h1>
+      <p class="lead">60問を解いた後こそ、学びの本番。採点結果から苦手を見つけ、図解で理解し、知識として定着させます。</p>
+      <p class="save-note">
+        <strong>学習内容は自動保存されます。</strong>
+        同じ端末・同じブラウザで同じURLを再度開くと、採点結果、回答内容、学習レポート、理解チェックが前回と同じ状態で表示され、復習を続けられます。
+        <small>※ ブラウザのサイトデータを削除した場合は保存内容も消去されます。</small>
+      </p>
+      <div class="hero-stats">
+        <div><strong>60</strong><span>全問題</span></div>
+        <div><strong>36</strong><span>合格基準</span></div>
+        <div><strong>90</strong><span>試験時間（分）</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="resultsTop" class="phase-panel">
+      <div id="phaseSteps" class="phase-steps">
+        <div data-step="exam"><b>1</b><span>試験に解答</span></div>
+        <i>→</i>
+        <div data-step="score"><b>2</b><span>採点結果</span></div>
+        <i>→</i>
+        <div data-step="review"><b>3</b><span>解説で復習</span></div>
+        <i>→</i>
+        <div data-step="complete"><b>4</b><span>60問理解</span></div>
+      </div>
+      <div id="phaseMessage" class="phase-message"></div>
+      <div id="scoreSummary" class="score-summary" hidden></div>
+      <div id="answerLegend" class="answer-legend" hidden>
+        <span><i class="correct"></i>緑：正解</span>
+        <span><i class="wrong"></i>赤：不正解</span>
+        <span><i class="understood"></i>枠線：理解チェック済み</span>
+      </div>
+    </section>
+
+    <section id="learningReport" class="learning-report" hidden>
+      <div class="report-heading">
+        <p class="section-kicker">FIRST ATTEMPT REPORT</p>
+        <h2>初回採点の学習レポート</h2>
+        <p id="reportDate"></p>
+      </div>
+      <div class="report-grid">
+        <section><h3>分野別正答率</h3><div id="fieldStats" class="field-stats"></div></section>
+        <section class="strength-card"><h3>得意分野・苦手分野</h3><div id="strengthWeakness"></div></section>
+      </div>
+      <section class="retest-card">
+        <h3>1週間後にもう一度解きたい問題</h3>
+        <p id="retestDate"></p>
+        <div id="retestQuestions" class="retest-questions"></div>
+      </section>
+      <section class="keywords-card">
+        <h3>この試験問題で覚えたい重要ワード</h3>
+        <div id="importantWords" class="important-words"></div>
+      </section>
+    </section>
+
+    <section id="reviewToolbar" class="toolbar" aria-label="復習問題の絞り込み" hidden>
+      <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="用語・問題番号で検索"></label>
+      <div id="filters" class="filters"></div>
+      <label class="toggle"><input id="onlyUnlearned" type="checkbox"><span>未理解だけ</span></label>
+    </section>
+
+    <section class="overview">
+      <div><p class="section-kicker">QUESTION MAP</p><h2 id="listTitle">試験問題</h2></div>
+      <div id="questionMap" class="question-map" aria-label="問題番号一覧"></div>
+    </section>
+
+    <section class="exam-control-area" data-exam-controls>
+      <p data-exam-message>60問すべてに回答すると採点できます。</p>
+      <div class="exam-control-buttons">
+        <button type="button" data-action="unanswered">未回答へ移動</button>
+        <button class="primary" type="button" data-action="submit" disabled>60問を採点する</button>
+        <button type="button" data-action="reset">最初からやり直す</button>
+      </div>
+    </section>
+
+    <section id="questions" class="questions"></section>
+    <p id="emptyState" class="empty" hidden>条件に一致する問題がありません。</p>
+    <section class="exam-control-area" data-exam-controls>
+      <p data-exam-message>60問すべてに回答すると採点できます。</p>
+      <div class="exam-control-buttons">
+        <button type="button" data-action="unanswered">未回答へ移動</button>
+        <button class="primary" type="button" data-action="submit" disabled>60問を採点する</button>
+        <button type="button" data-action="reset">最初からやり直す</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>令和8年度6月14日実施 修了認定試験・学習用解説</p>
+    <a href="#top">ページ上部へ ↑</a>
+  </footer>
+
+  <template id="questionTemplate">
+    <article class="question-card">
+      <div class="card-head">
+        <div class="number"></div>
+        <div class="heading"><p class="meta"></p><h2></h2></div>
+        <label class="understand-check"><input type="checkbox"><span>理解できた</span></label>
+      </div>
+      <section class="problem-panel">
+        <div class="problem-label"><span>問題</span><small>問題文・選択肢・図表</small></div>
+        <img loading="lazy" alt="">
+      </section>
+      <fieldset class="answer-input">
+        <legend>あなたの解答</legend>
+        <label><input type="radio" value="ア"><span>ア</span></label>
+        <label><input type="radio" value="イ"><span>イ</span></label>
+        <label><input type="radio" value="ウ"><span>ウ</span></label>
+        <label><input type="radio" value="エ"><span>エ</span></label>
+      </fieldset>
+      <div class="result-line"></div>
+      <section class="review-content">
+        <div class="answer-strip"><span>正解</span><strong></strong><p></p></div>
+        <div class="card-grid">
+          <div class="explanation">
+            <h3>なぜこの答えになる？</h3>
+            <p class="summary"></p>
+            <ol class="reasoning"></ol>
+            <div class="trap"><h3>ひっかけポイント</h3><p></p></div>
+          </div>
+          <figure class="visual"><div class="diagram"></div><figcaption></figcaption></figure>
+        </div>
+      </section>
+    </article>
+  </template>
+
+  <dialog id="confirmDialog" class="confirm-dialog">
+    <h2>60問を採点しますか？</h2>
+    <p>採点後は解答を変更できません。解説と理解チェックが表示されます。</p>
+    <div><button id="cancelSubmit" type="button">戻る</button><button id="confirmSubmit" class="primary" type="button">採点する</button></div>
+  </dialog>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+  <script src="learning.js"></script>
+</body>
+</html>
