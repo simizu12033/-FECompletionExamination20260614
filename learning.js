@@ -161,6 +161,7 @@ function updatePhasePanel(){
   const unresolved=QUESTIONS.filter(needsRetry).length;
   const retryAnswers=retryAnswerCount();
   const retryCorrect=retryCheckedCorrectCount();
+  const totalCorrect=firstScore()+retryCorrect;
   qs("#reviewToolbar").hidden=!isReview();
   document.querySelectorAll("[data-exam-controls]").forEach(el=>el.hidden=isReview());
   qs("#listTitle").textContent=isReview()?"採点結果と解説":"試験問題";
@@ -184,7 +185,7 @@ function updatePhasePanel(){
   summary.hidden=!isReview();
   qs("#answerLegend").hidden=!isReview();
   if(isReview()){
-    summary.innerHTML=`<div><strong>${firstScore()}</strong><span>正解</span></div><div><strong>${60-firstScore()}</strong><span>不正解</span></div><div><strong>${retryCorrect}</strong><span>再回答での正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
+    summary.innerHTML=`<div><strong>${totalCorrect}</strong><span>正解</span></div><div><strong>${60-totalCorrect}</strong><span>不正解</span></div><div><strong>${retryCorrect}</strong><span>再回答での正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
   }
   document.querySelectorAll("#phaseSteps [data-step]").forEach(el=>{
     el.classList.remove("active","finished");
