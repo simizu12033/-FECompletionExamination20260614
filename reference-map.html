@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>参考問題対応表｜令和8年度6月14日実施 修了認定試験</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body{background:#f8fafb;color:#17212b}
+    .reference-wrap{max-width:1180px;margin:0 auto;padding:38px 24px 70px}
+    .reference-hero{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 18px 50px #20304012}
+    .reference-hero h1{margin:.25rem 0 1rem;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:.03em}
+    .reference-hero p{line-height:1.9;color:var(--muted);max-width:860px}
+    .reference-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .reference-actions a{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:10px 16px;background:var(--navy);color:#fff;text-decoration:none;font-weight:700}
+    .reference-actions a.secondary{background:#fff;color:var(--blue);border:1px solid var(--line)}
+    .reference-note{margin:22px 0;padding:16px 18px;background:#fff8e1;border-left:6px solid var(--yellow);border-radius:14px;line-height:1.8}
+    .reference-table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 44px #2030400f}
+    .reference-table{width:100%;border-collapse:collapse;min-width:960px;font-size:.9rem}
+    .reference-table th,.reference-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+    .reference-table th{position:sticky;top:0;background:#153243;color:#fff;text-align:left;white-space:nowrap}
+    .reference-table tr:nth-child(even) td{background:#f7fbfc}
+    .reference-table td:first-child{font-weight:800;color:var(--blue);white-space:nowrap}
+    .badge{display:inline-block;border-radius:999px;padding:2px 9px;margin:0 4px 4px 0;background:#e8f4f8;color:#0f5f7a;font-weight:700;font-size:.78rem;white-space:nowrap}
+    .badge.sg{background:#ffe9e5;color:#a33a30}.badge.ap{background:#e7f5ee;color:#24745a}.badge.fe{background:#e8f4f8;color:#0f5f7a}
+    .reference-footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:.86rem}
+    .reference-footer a{color:var(--blue)}
+  </style>
+</head>
+<body>
+  <main class="reference-wrap">
+    <section class="reference-hero">
+      <p class="section-kicker">REFERENCE MAP</p>
+      <h1>参考問題対応表</h1>
+      <p>
+        この表は、各問の解説を作るときに対応づけやすい過去問題テーマを整理したものです。
+        年度・問番号を厳密に特定した出典表ではなく、基本情報技術者試験、応用情報技術者試験、
+        情報セキュリティマネジメント試験の公開過去問題で復習するときの「探す方向」を示しています。
+      </p>
+      <div class="reference-actions">
+        <a href="index.html">学習ページへ戻る</a>
+        <a class="secondary" href="reference-map.csv">CSVを開く</a>
+      </div>
+    </section>
+
+    <p class="reference-note">
+      使い方：授業資料やGitHub公開ページでは、この表を「参考にした問題領域の対応表」として添付できます。
+      もし後で年度・問番号まで確認できた場合は、CSVの「備考」列に追記すると管理しやすくなります。
+    </p>
+
+    <div class="reference-table-wrap">
+      <table class="reference-table">
+        <thead>
+          <tr>
+            <th>本試験</th>
+            <th>分野</th>
+            <th>テーマ</th>
+            <th>参考にしやすい過去問題区分</th>
+            <th>対応観点</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>問1</td><td>基礎理論</td><td>情報落ちを防ぐ加算順序</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>浮動小数点数、丸め誤差、情報落ち・桁落ちの区別</td><td>数値計算の定番テーマ</td></tr>
+          <tr><td>問2</td><td>基礎理論</td><td>マルコフ過程：2日後の確率</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>状態遷移、経路ごとの積、経路全体の和</td><td>確率・遷移行列の復習に対応</td></tr>
+          <tr><td>問3</td><td>AI</td><td>LLMのファインチューニング</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>事前学習済みモデル、追加学習、目的タスクへの適応</td><td>近年のAI用語問題として整理</td></tr>
+          <tr><td>問4</td><td>コンピュータ</td><td>A/D変換器の用途</td><td><span class="badge fe">基本情報</span></td><td>アナログ量、標本化、量子化、符号化</td><td>ハードウェア基礎</td></tr>
+          <tr><td>問5</td><td>アルゴリズム</td><td>完全二分探索木の構成</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>二分探索木、中央値、完全二分木、挿入順</td><td>木構造の典型問題</td></tr>
+          <tr><td>問6</td><td>アルゴリズム</td><td>行きがけ順の深さ優先探索</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>深さ優先探索、先行順、根・左・右の訪問順</td><td>探索順序の図解復習向け</td></tr>
+          <tr><td>問7</td><td>プログラミング</td><td>メソッドのオーバーロード</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>同名メソッド、引数リスト、オーバーライドとの違い</td><td>オブジェクト指向の基本</td></tr>
+          <tr><td>問8</td><td>コンピュータ</td><td>命令実行時間とMIPS</td><td><span class="badge fe">基本情報</span></td><td>平均命令実行時間、命令数/秒、MIPS換算</td><td>単位変換に注意</td></tr>
+          <tr><td>問9</td><td>コンピュータ</td><td>16ビットタイマーのオーバーフロー</td><td><span class="badge fe">基本情報</span></td><td>2の補数的な一周、カウント差、クロック周期</td><td>組込み・タイマ問題</td></tr>
+          <tr><td>問10</td><td>コンピュータ</td><td>ディスクのストライピング</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>RAID 0、分散配置、並列I/O、冗長性なし</td><td>RAID比較に対応</td></tr>
+          <tr><td>問11</td><td>システム</td><td>フェールセーフ</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>安全側への制御、フェールソフトとの違い</td><td>信頼性設計</td></tr>
+          <tr><td>問12</td><td>システム</td><td>Web/DBサーバのCPU増設</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>直列処理、ボトルネック、必要処理能力の見積り</td><td>性能設計・容量計画</td></tr>
+          <tr><td>問13</td><td>コンピュータ</td><td>ページ番号とページ内変位</td><td><span class="badge fe">基本情報</span></td><td>仮想記憶、ページサイズ、アドレスビット分割</td><td>2の累乗の扱い</td></tr>
+          <tr><td>問14</td><td>開発技術</td><td>ローコード開発</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>ローコード、ノーコード、GUI部品と少量コード</td><td>開発手法・ツール</td></tr>
+          <tr><td>問15</td><td>法務</td><td>GPLとソース公開義務</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>OSSライセンス、コピーレフト、配布時の義務</td><td>知的財産・ライセンス</td></tr>
+          <tr><td>問16</td><td>コンピュータ</td><td>アノードコモン7セグLED</td><td><span class="badge fe">基本情報</span></td><td>アクティブLow、16進数、ビット対応、LED点灯</td><td>組込み・論理回路寄り</td></tr>
+          <tr><td>問17</td><td>マルチメディア</td><td>バーチャルサラウンド</td><td><span class="badge fe">基本情報</span></td><td>聴覚特性、左右差、方向感の再現</td><td>音声・メディア処理</td></tr>
+          <tr><td>問18</td><td>データベース</td><td>NoSQL：グラフ型DB</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>NoSQL分類、ノード、エッジ、プロパティ</td><td>DB種類の比較</td></tr>
+          <tr><td>問19</td><td>データベース</td><td>関係Rの正規形</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>候補キー、部分関数従属、推移的関数従属、第3正規形</td><td>正規化の定番</td></tr>
+          <tr><td>問20</td><td>データベース</td><td>UNIONがエラーになる条件</td><td><span class="badge fe">基本情報</span></td><td>集合演算、列数、データ型互換、重複排除</td><td>SQL基礎</td></tr>
+          <tr><td>問21</td><td>データベース</td><td>ストアドプロシージャ</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>DBサーバ側手続き、通信削減、共通処理</td><td>DB運用・設計</td></tr>
+          <tr><td>問22</td><td>データベース</td><td>DBMSのチェックポイント</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>ログ、更新済みバッファ、障害回復、チェックポイント</td><td>トランザクション管理</td></tr>
+          <tr><td>問23</td><td>ネットワーク</td><td>Wi‑Fi Direct</td><td><span class="badge fe">基本情報</span></td><td>アクセスポイント不要、機器間直接接続</td><td>無線LAN規格</td></tr>
+          <tr><td>問24</td><td>ネットワーク</td><td>OSI参照モデルの層順</td><td><span class="badge fe">基本情報</span></td><td>第2層〜第5層、TCP/IPモデルとの違い</td><td>ネットワーク基礎</td></tr>
+          <tr><td>問25</td><td>ネットワーク</td><td>通信を識別する5タプル</td><td><span class="badge fe">基本情報</span><span class="badge sg">情報セキュリティマネジメント</span></td><td>IPアドレス、ポート番号、プロトコル、通信識別</td><td>FW・ログ分析にも接続</td></tr>
+          <tr><td>問26</td><td>ネットワーク</td><td>ネットワーク管理のSNMP</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>SNMP、MIB、マネージャ、エージェント、Trap</td><td>運用管理</td></tr>
+          <tr><td>問27</td><td>セキュリティ</td><td>侵入痕跡を隠すルートキット</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge ap">応用情報</span></td><td>マルウェア、権限維持、ログ・プロセス隠蔽</td><td>攻撃手法の分類</td></tr>
+          <tr><td>問28</td><td>セキュリティ</td><td>暗号の危殆化</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge ap">応用情報</span></td><td>ハッシュ関数、衝突、暗号アルゴリズムの安全性低下</td><td>暗号技術の寿命</td></tr>
+          <tr><td>問29</td><td>セキュリティ</td><td>本人拒否率と他人受入率</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge fe">基本情報</span></td><td>生体認証、FAR、FRR、しきい値</td><td>認証方式の比較</td></tr>
+          <tr><td>問30</td><td>セキュリティ</td><td>セキュリティのブラックボックステスト</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge ap">応用情報</span></td><td>ファジング、異常入力、脆弱性検出</td><td>セキュリティテスト</td></tr>
+          <tr><td>問31</td><td>セキュリティ</td><td>EDRの機能</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge ap">応用情報</span></td><td>エンドポイント監視、検知、調査、隔離</td><td>運用監視・インシデント対応</td></tr>
+          <tr><td>問32</td><td>セキュリティ</td><td>ゼロトラスト</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge ap">応用情報</span></td><td>継続的検証、最小権限、境界防御との違い</td><td>現代的アクセス制御</td></tr>
+          <tr><td>問33</td><td>セキュリティ</td><td>XSS対策の出力エスケープ</td><td><span class="badge sg">情報セキュリティマネジメント</span><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>Webアプリ脆弱性、エスケープ、入力と出力の区別</td><td>Webセキュリティ定番</td></tr>
+          <tr><td>問34</td><td>開発技術</td><td>DFDの読み方</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>データフロー、処理、データストア、外部実体</td><td>構造化分析</td></tr>
+          <tr><td>問35</td><td>プログラミング</td><td>継承による再利用</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>基底クラス、サブクラス、再利用、オーバーライド</td><td>オブジェクト指向</td></tr>
+          <tr><td>問36</td><td>開発技術</td><td>マイクロサービス</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>独立配備、疎結合、API連携、サービス分割</td><td>アーキテクチャ</td></tr>
+          <tr><td>問37</td><td>テスト</td><td>ブラックボックスの同値分割</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>同値クラス、代表値、ブラックボックステスト</td><td>テスト技法</td></tr>
+          <tr><td>問38</td><td>開発技術</td><td>コンポーネントウェア</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>再利用可能部品、インタフェース、組合せ開発</td><td>ソフトウェア部品化</td></tr>
+          <tr><td>問39</td><td>マネジメント</td><td>スクラムのプロダクトオーナー</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>プロダクトバックログ、優先順位、価値最大化</td><td>アジャイル開発</td></tr>
+          <tr><td>問40</td><td>開発技術</td><td>テスト駆動開発の三段階</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>Red、Green、Refactor、先にテストを書く</td><td>TDDの流れ</td></tr>
+          <tr><td>問41</td><td>マネジメント</td><td>ベースラインを確定するプロセス群</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>計画プロセス群、スコープ・スケジュール・コスト基準</td><td>プロジェクト管理</td></tr>
+          <tr><td>問42</td><td>マネジメント</td><td>アローダイアグラムの短縮</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>PERT、クリティカルパス、短縮対象、再計算</td><td>日程管理の計算問題</td></tr>
+          <tr><td>問43</td><td>サービス管理</td><td>インシデント管理</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span><span class="badge sg">情報セキュリティマネジメント</span></td><td>影響度、緊急度、優先度、早期復旧</td><td>ITIL・運用管理</td></tr>
+          <tr><td>問44</td><td>サービス管理</td><td>直列構成の可用性</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>直列系、稼働率の積、可用性計算</td><td>信頼性計算</td></tr>
+          <tr><td>問45</td><td>監査</td><td>内部監査人の独立性</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span><span class="badge sg">情報セキュリティマネジメント</span></td><td>独立性、客観性、自己監査の回避、レビューと実施の違い</td><td>監査の基本原則</td></tr>
+          <tr><td>問46</td><td>ストラテジ</td><td>BPMSの検証フェーズ</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>業務プロセス管理、PDCA、モニタリング、検証</td><td>業務改善</td></tr>
+          <tr><td>問47</td><td>ストラテジ</td><td>クロステック（X-Tech）</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>既存産業とIT、FinTech、EdTech、HealthTech</td><td>ビジネストレンド</td></tr>
+          <tr><td>問48</td><td>ストラテジ</td><td>BSC：内部ビジネスプロセス</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>バランススコアカード、4視点、内部プロセス指標</td><td>経営管理</td></tr>
+          <tr><td>問49</td><td>ストラテジ</td><td>PPMの問題児</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>市場成長率、相対的市場占有率、問題児・花形</td><td>事業ポートフォリオ</td></tr>
+          <tr><td>問50</td><td>ストラテジ</td><td>カニバリゼーション</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>自社商品同士の競合、既存売上の共食い</td><td>マーケティング</td></tr>
+          <tr><td>問51</td><td>ストラテジ</td><td>ビジネスモデルキャンバス</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>9要素、価値提案、顧客、収益、主要活動</td><td>ビジネスモデル設計</td></tr>
+          <tr><td>問52</td><td>ストラテジ</td><td>ハッカソン</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>短期間、共創、試作、デモ発表</td><td>イノベーション活動</td></tr>
+          <tr><td>問53</td><td>ストラテジ</td><td>RPA</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>定型業務、ソフトウェアロボット、画面操作自動化</td><td>業務自動化</td></tr>
+          <tr><td>問54</td><td>IoT</td><td>エネルギーハーベスティング</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>光・熱・振動・電波、微小発電、IoTセンサ</td><td>IoTデバイス</td></tr>
+          <tr><td>問55</td><td>ストラテジ</td><td>ソーシャルメディア</td><td><span class="badge fe">基本情報</span></td><td>利用者発信、共有、つながり、拡散</td><td>ネットサービス</td></tr>
+          <tr><td>問56</td><td>人材育成</td><td>OJT</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>職場内訓練、実務、指導、Off-JTとの違い</td><td>人材育成</td></tr>
+          <tr><td>問57</td><td>ストラテジ</td><td>移動平均による販売予測</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>移動平均、予測、絶対誤差、期間幅の比較</td><td>需要予測</td></tr>
+          <tr><td>問58</td><td>品質管理</td><td>パレート図</td><td><span class="badge fe">基本情報</span><span class="badge ap">応用情報</span></td><td>件数降順の棒、累積割合、重点少数</td><td>QC七つ道具</td></tr>
+          <tr><td>問59</td><td>会計</td><td>固定資産売却損の区分</td><td><span class="badge fe">基本情報</span></td><td>損益計算書、特別損失、営業外・販管費との違い</td><td>会計基礎</td></tr>
+          <tr><td>問60</td><td>法務</td><td>個人情報の目的と同意</td><td><span class="badge fe">基本情報</span><span class="badge sg">情報セキュリティマネジメント</span></td><td>利用目的、本人同意、目的外利用、第三者提供</td><td>個人情報保護</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reference-footer">
+      <p>令和8年度6月14日実施 修了認定試験・学習用解説</p>
+      <p><a href="index.html">学習ページへ戻る</a></p>
+    </div>
+  </main>
+</body>
+</html>
