@@ -124,7 +124,7 @@ function renderLearning(){
         }else{
           line.className="result-line wrong";
           line.textContent=learningState.retryAnswers[q.n]
-            ?`初回は不正解でした。再回答を記録しました。正誤はまだ表示していません。上の「再回答を採点する」を押してください。`
+            ?`初回は不正解でした。再回答を記録しました。正誤はまだ表示していません。「再回答を採点する」を押してください。`
             :`初回は不正解でした。正答と解説は隠しています。もう一度選択肢を選んでください。`;
         }
       }else{
@@ -167,8 +167,12 @@ function updatePhasePanel(){
   qs("#phaseMessage").textContent=isReview()
     ?`採点済みです。初回に間違えた問題は選択肢を押して再回答できます。正誤は「再回答を採点する」を押した時だけ表示します。（未解決 ${unresolved}問）`
     :`${answeredCount()}問回答済み。60問すべて回答すると採点できます。`;
-  qs("#retryGradeArea").hidden=!isReview()||QUESTIONS.every(q=>!wasWrong(q));
-  qs("#retryGradeBtn").disabled=retryAnswers===0;
+  document.querySelectorAll(".retry-grade-area").forEach(area=>{
+    area.hidden=!isReview()||QUESTIONS.every(q=>!wasWrong(q));
+  });
+  document.querySelectorAll('[data-action="retry-grade"]').forEach(button=>{
+    button.disabled=retryAnswers===0;
+  });
   document.querySelectorAll('[data-action="submit"]').forEach(button=>{
     button.textContent="60問を採点する";
     button.disabled=answeredCount()!==60;
@@ -180,7 +184,7 @@ function updatePhasePanel(){
   summary.hidden=!isReview();
   qs("#answerLegend").hidden=!isReview();
   if(isReview()){
-    summary.innerHTML=`<div><strong>${firstScore()}</strong><span>初回の正解</span></div><div><strong>${retryCorrect}</strong><span>再回答で正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
+    summary.innerHTML=`<div><strong>${firstScore()}</strong><span>正解</span></div><div><strong>${60-firstScore()}</strong><span>不正解</span></div><div><strong>${retryCorrect}</strong><span>再回答での正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
   }
   document.querySelectorAll("#phaseSteps [data-step]").forEach(el=>{
     el.classList.remove("active","finished");
@@ -287,7 +291,7 @@ function initLearning(){
   };
   qs("#searchInput").oninput=e=>{learningState.query=e.target.value.replace(/^問/,"");renderLearning()};
   qs("#onlyUnlearned").onchange=e=>{learningState.onlyUnlearned=e.target.checked;renderLearning()};
-  qs("#retryGradeBtn").onclick=gradeRetryAnswers;
+  document.querySelectorAll('[data-action="retry-grade"]').forEach(button=>button.onclick=gradeRetryAnswers);
   document.querySelectorAll('[data-action="unanswered"]').forEach(button=>button.onclick=jumpUnanswered);
   document.querySelectorAll('[data-action="submit"]').forEach(button=>button.onclick=()=>qs("#confirmDialog").showModal());
   document.querySelectorAll('[data-action="reset"]').forEach(button=>button.onclick=resetLearning);

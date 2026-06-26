@@ -48,8 +48,8 @@
         <div data-step="complete"><b>4</b><span>60問理解</span></div>
       </div>
       <div id="phaseMessage" class="phase-message"></div>
-      <div id="retryGradeArea" class="phase-actions retry-grade-area" hidden>
-        <button id="retryGradeBtn" class="primary" type="button">再回答を採点する</button>
+      <div class="phase-actions retry-grade-area" hidden>
+        <button class="primary" type="button" data-action="retry-grade">再回答を採点する</button>
       </div>
       <div id="scoreSummary" class="score-summary" hidden></div>
       <div id="answerLegend" class="answer-legend" hidden>
@@ -102,6 +102,12 @@
 
     <section id="questions" class="questions"></section>
     <p id="emptyState" class="empty" hidden>条件に一致する問題がありません。</p>
+    <section class="exam-control-area retry-grade-area" hidden>
+      <p>再回答を選び終えたら採点してください。</p>
+      <div class="exam-control-buttons">
+        <button class="primary" type="button" data-action="retry-grade">再回答を採点する</button>
+      </div>
+    </section>
     <section class="exam-control-area" data-exam-controls>
       <p data-exam-message>60問すべてに回答すると採点できます。</p>
       <div class="exam-control-buttons">
