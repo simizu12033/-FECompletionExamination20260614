@@ -5,7 +5,8 @@ const STORAGE={
   answers:`${STORAGE_PREFIX}-answers`,
   done:`${STORAGE_PREFIX}-done`,
   report:`${STORAGE_PREFIX}-first-report`,
-  retryAnswers:`${STORAGE_PREFIX}-retry-answers`
+  retryAnswers:`${STORAGE_PREFIX}-retry-answers`,
+  retryChecked:`${STORAGE_PREFIX}-retry-checked`
 };
 
 // 旧版の保存データがあれば、新しい教材専用キーへ一度だけ引き継ぐ。
@@ -22,6 +23,7 @@ const learningState={
   phase:localStorage.getItem(STORAGE.phase)||"exam",
   answers:JSON.parse(localStorage.getItem(STORAGE.answers)||"{}"),
   retryAnswers:JSON.parse(localStorage.getItem(STORAGE.retryAnswers)||"{}"),
+  retryChecked:JSON.parse(localStorage.getItem(STORAGE.retryChecked)||"{}"),
   understood:new Set(JSON.parse(localStorage.getItem(STORAGE.done)||"[]")),
   filter:"すべて",
   query:"",
@@ -50,6 +52,7 @@ const saveLearning=()=>{
   localStorage.setItem(STORAGE.phase,learningState.phase);
   localStorage.setItem(STORAGE.answers,JSON.stringify(learningState.answers));
   localStorage.setItem(STORAGE.retryAnswers,JSON.stringify(learningState.retryAnswers));
+  localStorage.setItem(STORAGE.retryChecked,JSON.stringify(learningState.retryChecked));
   localStorage.setItem(STORAGE.done,JSON.stringify([...learningState.understood]));
 };
 const answeredCount=()=>Object.keys(learningState.answers).length;
@@ -57,7 +60,12 @@ const firstScore=()=>QUESTIONS.filter(q=>learningState.answers[q.n]===q.answer).
 const isReview=()=>learningState.phase==="review";
 const currentAnswer=q=>learningState.retryAnswers[q.n]||learningState.answers[q.n];
 const wasWrong=q=>learningState.answers[q.n]!==q.answer;
-const needsRetry=q=>isReview()&&wasWrong(q);
+const retryCheckedAnswer=q=>learningState.retryChecked[q.n];
+const retryCheckedCorrect=q=>retryCheckedAnswer(q)===q.answer;
+const retryWasChecked=q=>Object.prototype.hasOwnProperty.call(learningState.retryChecked,q.n);
+const needsRetry=q=>isReview()&&wasWrong(q)&&!retryCheckedCorrect(q);
+const retryAnswerCount=()=>QUESTIONS.filter(q=>wasWrong(q)&&learningState.retryAnswers[q.n]).length;
+const retryCheckedCorrectCount=()=>QUESTIONS.filter(q=>wasWrong(q)&&retryCheckedCorrect(q)).length;
 
 function visible(q){
   if(!isReview())return true;
@@ -90,6 +98,7 @@ function renderLearning(){
       input.onchange=()=>{
         if(isReview()){
           learningState.retryAnswers[q.n]=input.value;
+          delete learningState.retryChecked[q.n];
           saveLearning();
           renderLearning();
           document.querySelector(`#q${q.n}`)?.scrollIntoView({block:"center"});
@@ -106,10 +115,18 @@ function renderLearning(){
     if(isReview()){
       const line=node.querySelector(".result-line");
       if(wasWrong(q)){
-        line.className="result-line wrong";
-        line.textContent=learningState.retryAnswers[q.n]
-          ?`初回は不正解でした。再回答を記録しました。正誤はここでは表示しません。`
-          :`初回は不正解でした。正答と解説は隠しています。もう一度選択肢を選んでください。`;
+        if(retryWasChecked(q)){
+          const ok=retryCheckedCorrect(q);
+          line.className=`result-line ${ok?"correct":"wrong"}`;
+          line.textContent=ok
+            ?`再回答は正解です。解説を確認してください。`
+            :`再回答は不正解でした。もう一度考えて選び直してください。`;
+        }else{
+          line.className="result-line wrong";
+          line.textContent=learningState.retryAnswers[q.n]
+            ?`初回は不正解でした。再回答を記録しました。正誤はまだ表示していません。上の「再回答を採点する」を押してください。`
+            :`初回は不正解でした。正答と解説は隠しています。もう一度選択肢を選んでください。`;
+        }
       }else{
         line.className="result-line correct";
         line.textContent=`正解：あなたの回答 ${learningState.answers[q.n]}`;
@@ -142,12 +159,16 @@ function renderLearning(){
 function updatePhasePanel(){
   const complete=learningState.understood.size===60;
   const unresolved=QUESTIONS.filter(needsRetry).length;
+  const retryAnswers=retryAnswerCount();
+  const retryCorrect=retryCheckedCorrectCount();
   qs("#reviewToolbar").hidden=!isReview();
   document.querySelectorAll("[data-exam-controls]").forEach(el=>el.hidden=isReview());
   qs("#listTitle").textContent=isReview()?"採点結果と解説":"試験問題";
   qs("#phaseMessage").textContent=isReview()
-    ?`採点済みです。初回に間違えた問題は選択肢を押して再回答できます。再回答の正誤はその場では表示せず、正答と解説も隠しています。（初回不正解 ${unresolved}問）`
+    ?`採点済みです。初回に間違えた問題は選択肢を押して再回答できます。正誤は「再回答を採点する」を押した時だけ表示します。（未解決 ${unresolved}問）`
     :`${answeredCount()}問回答済み。60問すべて回答すると採点できます。`;
+  qs("#retryGradeArea").hidden=!isReview()||QUESTIONS.every(q=>!wasWrong(q));
+  qs("#retryGradeBtn").disabled=retryAnswers===0;
   document.querySelectorAll('[data-action="submit"]').forEach(button=>{
     button.textContent="60問を採点する";
     button.disabled=answeredCount()!==60;
@@ -159,7 +180,7 @@ function updatePhasePanel(){
   summary.hidden=!isReview();
   qs("#answerLegend").hidden=!isReview();
   if(isReview()){
-    summary.innerHTML=`<div><strong>${firstScore()}</strong><span>初回の正解</span></div><div><strong>${60-firstScore()}</strong><span>初回の不正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
+    summary.innerHTML=`<div><strong>${firstScore()}</strong><span>初回の正解</span></div><div><strong>${retryCorrect}</strong><span>再回答で正解</span></div><div><strong>${learningState.understood.size}</strong><span>理解済み</span></div>`;
   }
   document.querySelectorAll("#phaseSteps [data-step]").forEach(el=>{
     el.classList.remove("active","finished");
@@ -183,7 +204,7 @@ function renderLearningMap(){
   qs("#questionMap").innerHTML=QUESTIONS.map(q=>{
     let cls="";
     if(!isReview()&&learningState.answers[q.n])cls="answered";
-    if(isReview())cls=wasWrong(q)?"wrong":"correct";
+    if(isReview())cls=wasWrong(q)?(retryCheckedCorrect(q)?"correct":"wrong"):"correct";
     if(learningState.understood.has(q.n))cls+=" done";
     return `<a href="#q${q.n}" class="${cls}">${q.n}</a>`;
   }).join("");
@@ -239,6 +260,16 @@ function jumpUnanswered(){
   const q=QUESTIONS.find(x=>!learningState.answers[x.n]);
   if(q)document.querySelector(`#q${q.n}`)?.scrollIntoView({behavior:"smooth",block:"start"});
 }
+function gradeRetryAnswers(){
+  QUESTIONS.forEach(q=>{
+    if(wasWrong(q)&&learningState.retryAnswers[q.n]){
+      learningState.retryChecked[q.n]=learningState.retryAnswers[q.n];
+    }
+  });
+  saveLearning();
+  renderLearning();
+  qs("#resultsTop").scrollIntoView({behavior:"smooth",block:"start"});
+}
 function resetLearning(){
   if(confirm("解答・採点結果・理解チェックをすべて消して最初からやり直しますか？")){
     Object.values(STORAGE).forEach(k=>localStorage.removeItem(k));
@@ -256,6 +287,7 @@ function initLearning(){
   };
   qs("#searchInput").oninput=e=>{learningState.query=e.target.value.replace(/^問/,"");renderLearning()};
   qs("#onlyUnlearned").onchange=e=>{learningState.onlyUnlearned=e.target.checked;renderLearning()};
+  qs("#retryGradeBtn").onclick=gradeRetryAnswers;
   document.querySelectorAll('[data-action="unanswered"]').forEach(button=>button.onclick=jumpUnanswered);
   document.querySelectorAll('[data-action="submit"]').forEach(button=>button.onclick=()=>qs("#confirmDialog").showModal());
   document.querySelectorAll('[data-action="reset"]').forEach(button=>button.onclick=resetLearning);
@@ -263,6 +295,7 @@ function initLearning(){
   qs("#confirmSubmit").onclick=()=>{
     learningState.phase="review";
     learningState.retryAnswers={};
+    learningState.retryChecked={};
     saveLearning();
     ensureFirstReport();
     qs("#confirmDialog").close();
