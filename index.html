@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="visuals.css">
   <link rel="stylesheet" href="flow.css">
   <link rel="stylesheet" href="report.css">
+  <link rel="stylesheet" href="terms.css">
 </head>
 <body>
   <header class="hero">
@@ -30,6 +31,7 @@
       </p>
       <div class="hero-stats">
         <div><strong>60</strong><span>全問題</span></div>
+        <div><strong>60</strong><span>用語カード</span></div>
         <div><strong>36</strong><span>合格基準</span></div>
         <div><strong>90</strong><span>試験時間（分）</span></div>
       </div>
@@ -86,6 +88,38 @@
       <label class="toggle"><input id="onlyUnlearned" type="checkbox"><span>未理解だけ</span></label>
     </section>
 
+    <section id="termLearning" class="term-learning">
+      <div class="term-head">
+        <div>
+          <p class="section-kicker">TERM CARDS</p>
+          <h2>重要用語カード</h2>
+          <p>用語を見て意味を思い出すだけでなく、説明から用語を答える練習をします。覚えた状態は自動保存されます。</p>
+        </div>
+        <div id="termStats" class="term-stats" aria-label="用語カードの進捗"></div>
+      </div>
+      <div class="term-tools" hidden>
+        <label class="search"><span>⌕</span><input id="termSearch" type="search" placeholder="用語・説明・タグで検索"></label>
+        <div id="termFilters" class="term-filters"></div>
+      </div>
+      <div class="term-layout">
+        <aside class="term-side">
+          <section class="term-weak">
+            <h3>間違えた問題の用語</h3>
+            <div id="termWeakLinks" class="term-weak-links"></div>
+          </section>
+        </aside>
+        <section class="term-study" aria-label="用語カード学習">
+          <div class="term-nav">
+            <button id="termPrev" type="button">前へ</button>
+            <span id="termPosition"></span>
+            <button id="termNext" type="button">次へ</button>
+          </div>
+          <div id="termCard" class="term-card"></div>
+          <button id="termReset" class="term-reset" type="button">用語カードの記録をリセット</button>
+        </section>
+      </div>
+    </section>
+
     <section class="overview">
       <div><p class="section-kicker">QUESTION MAP</p><h2 id="listTitle">試験問題</h2></div>
       <div id="questionMap" class="question-map" aria-label="問題番号一覧"></div>
@@ -121,10 +155,12 @@
   <footer>
     <div class="footer-notes">
       <p>令和8年度6月14日実施 修了認定試験・学習用解説</p>
-      <p class="source-note">出典・参考：問題画像は提供された試験問題画像を使用。解説作成にあたり、基本情報技術者試験、応用情報技術者試験、情報セキュリティマネジメント試験の公開過去問題・関連問題も参考にしています。</p>
+      <p class="source-note">出典・参考：問題画像は提供された tokurei_Mondai_20260614_FE.pdf 由来の試験問題画像を使用。解説作成にあたり、基本情報技術者試験、応用情報技術者試験、情報セキュリティマネジメント試験の公開過去問題・関連問題も参考にしています。</p>
     </div>
     <div class="footer-links">
+      <a href="#termLearning">重要用語カード</a>
       <a href="reference-map.html">参考問題対応表</a>
+      <a href="source-map.html">出典候補調査表</a>
       <a href="#top">ページ上部へ ↑</a>
     </div>
   </footer>
@@ -170,7 +206,9 @@
   </dialog>
 
   <script src="questions.js"></script>
+  <script src="terms.js"></script>
   <script src="app.js"></script>
+  <script src="terms-ui.js"></script>
   <script src="learning.js"></script>
 </body>
 </html>
