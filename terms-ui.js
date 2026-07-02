@@ -7,25 +7,10 @@ const termState={
   progress:JSON.parse(localStorage.getItem(TERM_STORAGE_KEY)||"{}")
 };
 const termFields=["すべて",...new Set(TERMS.map(t=>t.field))];
-const termStatusLabel={known:"覚えた",shaky:"あやしい",weak:"覚えていない"};
+const termStatusLabel={known:"説明できた",shaky:"少し不安",weak:"説明できない"};
 const termStatusClass={known:"known",shaky:"shaky",weak:"weak"};
 const termStatusRank={weak:0,shaky:1,known:2};
 const termEsc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const termRegexEsc=s=>String(s).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-
-function maskedMeaning(term){
-  let text=term.meaning;
-  const masks=[
-    term.term,
-    term.term.replace(/[・･].*$/,""),
-    ...(term.tags||[]).filter(tag=>tag!==term.field)
-  ].filter(Boolean).sort((a,b)=>b.length-a.length);
-  [...new Set(masks)].forEach(word=>{
-    if(word.length<2)return;
-    text=text.replace(new RegExp(termRegexEsc(word),"g"),"【　　　】");
-  });
-  return text;
-}
 
 function saveTermProgress(){
   localStorage.setItem(TERM_STORAGE_KEY,JSON.stringify(termState.progress));
@@ -86,9 +71,9 @@ function renderTerms(){
   const wrongWeak=weakTermsFromAnswers();
   document.querySelector("#termStats").innerHTML=[
     ["全用語",TERMS.length],
-    ["覚えた",known],
-    ["あやしい",shaky],
-    ["覚えていない",weak]
+    ["説明できた",known],
+    ["少し不安",shaky],
+    ["説明できない",weak]
   ].map(([label,value])=>`<div><strong>${value}</strong><span>${label}</span></div>`).join("");
   const filters=document.querySelector("#termFilters");
   if(filters)filters.innerHTML="";
@@ -105,13 +90,12 @@ function renderTerms(){
       </div>
       <button class="term-flip" type="button" aria-expanded="${termState.flipped}">
         <span class="term-face front">
-          <small>この説明に当てはまる重要用語は？</small>
-          <strong class="term-question">${termEsc(maskedMeaning(active))}</strong>
-          <em>クリックして答えを見る</em>
+          <small>この用語を説明できる？</small>
+          <strong>${termEsc(active.term)}</strong>
+          <em>クリックして説明を見る</em>
         </span>
         <span class="term-face back">
-          <small>重要用語</small>
-          <strong>${termEsc(active.term)}</strong>
+          <small>説明</small>
           <b>${termEsc(active.cue)}</b>
           <p>${termEsc(active.meaning)}</p>
           <i>${termEsc(active.trap)}</i>
@@ -119,9 +103,9 @@ function renderTerms(){
       </button>
       <div class="term-tags">${active.tags.map(tag=>`<span>${termEsc(tag)}</span>`).join("")}</div>
       <div class="term-grade">
-        <button type="button" data-term-status="known">覚えた</button>
-        <button type="button" data-term-status="shaky">あやしい</button>
-        <button type="button" data-term-status="weak">覚えていない</button>
+        <button type="button" data-term-status="known">説明できた</button>
+        <button type="button" data-term-status="shaky">少し不安</button>
+        <button type="button" data-term-status="weak">説明できない</button>
       </div>
       ${status?`<p class="term-current">現在：${termStatusLabel[status]}</p>`:""}
     `;
@@ -169,7 +153,7 @@ function initTerms(){
   document.querySelector("#termPrev").onclick=()=>setActiveTerm(termState.active-1);
   document.querySelector("#termNext").onclick=()=>setActiveTerm(termState.active+1);
   document.querySelector("#termReset").onclick=()=>{
-    if(confirm("用語カードの覚えた/あやしい/覚えていないの記録を消しますか？")){
+    if(confirm("用語カードの説明できた/少し不安/説明できないの記録を消しますか？")){
       termState.progress={};
       saveTermProgress();
       renderTerms();
