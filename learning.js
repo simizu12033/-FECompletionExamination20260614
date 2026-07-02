@@ -312,7 +312,8 @@ function initLearning(){
     document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b===e.target));
     renderLearning();
   };
-  qs("#searchInput").oninput=e=>{learningState.query=e.target.value.replace(/^問/,"");renderLearning()};
+  const searchInput=qs("#searchInput");
+  if(searchInput)searchInput.oninput=e=>{learningState.query=e.target.value.replace(/^問/,"");renderLearning()};
   qs("#onlyUnlearned").onchange=e=>{learningState.onlyUnlearned=e.target.checked;renderLearning()};
   document.querySelectorAll('[data-action="retry-grade"]').forEach(button=>button.onclick=gradeRetryAnswers);
   document.querySelectorAll('[data-action="unanswered"]').forEach(button=>button.onclick=jumpUnanswered);
